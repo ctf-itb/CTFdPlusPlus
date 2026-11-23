@@ -103,5 +103,6 @@ CTFd/themes/*
 !CTFd/themes/ifest2026/
 !CTFd/themes/techfest/
 !CTFd/themes/ncw2026/
+!CTFd/themes/arkav2026/
 # Copyrighted flag-success soundtracks: kept out of the public repo, copied in per deployment
 CTFd/themes/ncw2026/static/sfx/*.mp3

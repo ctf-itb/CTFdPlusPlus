@@ -1,0 +1,2 @@
+# Keep large original Figma exports locally; commit the prepared web assets.
+/source/*.svg

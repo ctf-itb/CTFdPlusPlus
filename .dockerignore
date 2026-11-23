@@ -21,3 +21,4 @@ CTFd/uploads/**/*
 **/__pycache__
 .venv*
 venv*
+CTFd/themes/arkav2026/source/*.svg

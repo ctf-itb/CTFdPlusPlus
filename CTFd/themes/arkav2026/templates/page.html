@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% if request.path == request.script_root + '/' %}
+    <section class="arkav-hero" aria-labelledby="arkav-home-title">
+      <img
+          class="arkav-hero-art"
+          src="{{ url_for('views.themes', theme='arkav2026', path='img/hero-landscape.webp') }}"
+          srcset="{{ url_for('views.themes', theme='arkav2026', path='img/hero-landscape-mobile.webp') }} 900w, {{ url_for('views.themes', theme='arkav2026', path='img/hero-landscape.webp') }} 1900w"
+          sizes="(max-aspect-ratio: 23/20) 115svh, 100vw"
+          alt="" aria-hidden="true"
+          width="1900" height="1652" fetchpriority="high" decoding="async"
+      >
+      <img
+          class="arkav-hero-banner"
+          src="{{ url_for('views.themes_beta', theme='arkav2026', path='img/hero-banner.webp', v='2') }}"
+          srcset="{{ url_for('views.themes_beta', theme='arkav2026', path='img/hero-banner-mobile.webp', v='2') }} 1200w, {{ url_for('views.themes_beta', theme='arkav2026', path='img/hero-banner.webp', v='2') }} 3840w"
+          sizes="(max-width: 575.98px) calc(100vw - 2rem), (min-width: 1267px) 1140px, 90vw"
+          alt="" aria-hidden="true"
+          width="3840" height="928" fetchpriority="high" decoding="async"
+      >
+      <h1 id="arkav-home-title" class="visually-hidden">Arkavidia 11.0 — Capture the Flag</h1>
+      <div class="arkav-hero-actions">
+        <p class="arkav-eyebrow">Capture the Flag</p>
+        <div class="arkav-hero-buttons">
+          {% if authed() %}
+            <a class="btn btn-primary arkav-hero-primary" href="{{ url_for('challenges.listing') }}">
+              {% trans %}Enter the arena{% endtrans %}
+              <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i>
+            </a>
+          {% else %}
+            <a class="btn btn-primary arkav-hero-primary" href="{{ url_for('auth.login') }}">
+              {% trans %}Login{% endtrans %}
+              <i class="fas fa-arrow-right ms-2" aria-hidden="true"></i>
+            </a>
+          {% endif %}
+          {% if Configs.score_visibility != 'admins' %}
+            <a class="btn btn-outline-secondary arkav-hero-secondary" href="{{ url_for('scoreboard.listing') }}">
+              <i class="fas fa-ranking-star me-2" aria-hidden="true"></i>
+              {% trans %}Scoreboard{% endtrans %}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  {% else %}
+    <div class="container arkav-page-content">
+      {{ content | safe }}
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  {{ Assets.js("assets/js/page.js") }}
+{% endblock %}

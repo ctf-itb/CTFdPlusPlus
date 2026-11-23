@@ -1,0 +1,639 @@
+/* Arkavidia 11.0: the Figma's gilded ribbons, paper, jade and mountain blues.
+   Shared controls deliberately cover the core templates and plugin dialogs. */
+@font-face {
+  font-family: "Arkav Marko One";
+  src: url("../fonts/MarkoOne-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+.arkav-theme {
+  --arkav-pine: #0f2f2e;
+  --arkav-jade: #2e5e54;
+  --arkav-gold: #f5a623;
+  --arkav-ochre: #d98e04;
+  --arkav-cream: #fffce9;
+  --arkav-sand: #fdd594;
+  --arkav-coral: #ef4434;
+  --arkav-blue: #2a799d;
+  --arkav-indigo: #314ab3;
+  --arkav-display: "Arkav Marko One", Georgia, serif;
+  --arkav-nav-height: 80px;
+  --arkav-surface: #fffce9;
+  --arkav-panel: #fffce9;
+  --arkav-ink: #0f2f2e;
+  --arkav-muted: #526e65;
+  --arkav-line: rgba(217, 142, 4, 0.45);
+  --arkav-soft-line: rgba(46, 94, 84, 0.12);
+  --arkav-shadow: 0 14px 38px rgba(15, 47, 46, 0.12);
+  --bs-body-color: var(--arkav-ink);
+  --bs-body-bg: var(--arkav-surface);
+  --bs-heading-color: var(--arkav-ink);
+  --bs-border-color: var(--arkav-line);
+  --bs-secondary-color: var(--arkav-muted);
+  --bs-tertiary-bg: var(--arkav-panel);
+  --bs-link-color: var(--arkav-jade);
+  --bs-link-color-rgb: 46, 94, 84;
+  --bs-link-hover-color: var(--arkav-ochre);
+  --bs-link-hover-color-rgb: 217, 142, 4;
+  --bs-primary-rgb: 15, 47, 46;
+  --bs-secondary-rgb: 46, 94, 84;
+  --bs-success-rgb: 46, 94, 84;
+  --bs-danger-rgb: 239, 68, 52;
+  --bs-warning-rgb: 245, 166, 35;
+  --bs-info-rgb: 42, 121, 157;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;
+  color: var(--arkav-ink);
+  background: var(--arkav-surface);
+  background-image: radial-gradient(ellipse at 0 0, rgba(253, 213, 148, 0.4), transparent 65%);
+  line-height: 1.65;
+}
+
+[data-bs-theme="dark"] .arkav-theme {
+  --arkav-surface: #0f2f2e;
+  --arkav-panel: #173d37;
+  --arkav-ink: #fffce9;
+  --arkav-muted: #bdcec0;
+  --arkav-line: rgba(253, 213, 148, 0.4);
+  --arkav-soft-line: rgba(253, 213, 148, 0.12);
+  --arkav-shadow: 0 14px 38px rgba(0, 0, 0, 0.2);
+  --bs-link-color: var(--arkav-sand);
+  --bs-link-color-rgb: 253, 213, 148;
+  --bs-link-hover-color: var(--arkav-gold);
+  --bs-link-hover-color-rgb: 245, 166, 35;
+}
+
+.arkav-theme [x-cloak] { display: none !important; }
+.arkav-theme ::selection { color: var(--arkav-pine); background: var(--arkav-sand); }
+.arkav-theme h1, .arkav-theme h2, .arkav-theme h3, .arkav-theme h4, .arkav-wordmark {
+  font-family: var(--arkav-display);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1.3;
+  text-wrap: balance;
+}
+.arkav-theme a:not(.btn):not(.nav-link):not(.navbar-brand):not(.page-link):not(.dropdown-item) {
+  color: var(--bs-link-color);
+  text-underline-offset: 0.2em;
+}
+.arkav-theme a:not(.btn):not(.nav-link):not(.navbar-brand):not(.page-link):not(.dropdown-item):hover {
+  color: var(--bs-link-hover-color);
+}
+.arkav-theme :focus-visible { outline: 3px solid var(--arkav-gold); outline-offset: 4px; }
+.arkav-theme main {
+  flex: 1 0 auto;
+  min-height: calc(100svh - var(--arkav-nav-height) - 76px);
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 3rem;
+  /* No z-index or transform: Bootstrap modals must remain above their backdrop. */
+}
+.arkav-skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 1rem;
+  z-index: 2000;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--arkav-gold);
+  border-radius: 1rem 0.35rem;
+  color: var(--arkav-cream) !important;
+  background: var(--arkav-pine);
+  transform: translateY(-160%);
+}
+.arkav-skip-link:focus { transform: translateY(0); }
+
+/* The navigation uses jade surfaces and quiet cream borders. */
+.arkav-navbar {
+  --bs-navbar-brand-color: var(--arkav-cream);
+  --bs-navbar-brand-hover-color: var(--arkav-cream);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  min-height: var(--arkav-nav-height);
+  padding: 0.8rem clamp(0.4rem, 1vw, 1rem);
+  border: 0;
+  background: linear-gradient(110deg, var(--arkav-pine), var(--arkav-jade));
+  box-shadow: 0 8px 30px rgba(15, 47, 46, 0.18);
+}
+.arkav-navbar > .container-fluid { max-width: 1760px; gap: 0.75rem; }
+.arkav-navbar .navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.65rem;
+  margin-right: 0.8rem;
+  color: var(--arkav-cream);
+}
+.arkav-navbar .navbar-brand,
+.arkav-navbar .navbar-brand:hover,
+.arkav-navbar .navbar-brand:active {
+  color: var(--arkav-cream);
+  background: transparent;
+  box-shadow: none;
+  text-decoration: none;
+  transform: none;
+  translate: none;
+  filter: none;
+  transition: none;
+}
+.arkav-navbar .navbar-brand:hover img { transform: none; filter: none; }
+.arkav-navbar :focus-visible { outline-color: var(--arkav-cream); }
+.arkav-emblem { width: 28px; height: 40px; object-fit: contain; }
+.arkav-navbar .ctf_logo { max-width: min(210px, 55vw); object-fit: contain; }
+.arkav-wordmark { font-size: 1.03rem; white-space: nowrap; }
+.arkav-wordmark > span { color: var(--arkav-gold); }
+.arkav-wordmark small {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--arkav-sand);
+  font-family: Lato, sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+}
+.arkav-navbar .navbar-collapse { gap: 0.8rem; }
+.arkav-navbar .navbar-nav { gap: 0.35rem; align-items: center; }
+.arkav-navbar .navbar-nav .nav-link,
+.arkav-navbar .navbar-toggler {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 38px;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid rgba(255, 252, 233, 0.22);
+  border-radius: 0.9rem 0.25rem;
+  color: var(--arkav-cream);
+  background: rgba(15, 47, 46, 0.3);
+  font-family: var(--arkav-display);
+  font-size: 0.73rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: color 180ms, background-color 180ms, border-color 180ms, box-shadow 180ms;
+}
+.arkav-navbar .navbar-nav .nav-link:hover,
+.arkav-navbar .navbar-nav .nav-link:focus-visible,
+.arkav-navbar .navbar-toggler:hover {
+  border-color: rgba(255, 252, 233, 0.5);
+  color: var(--arkav-sand);
+  background: var(--arkav-pine);
+  box-shadow: none;
+}
+.arkav-navbar .navbar-nav .nav-link.active,
+.arkav-navbar .navbar-nav .arkav-nav-emphasis,
+.arkav-navbar .navbar-nav .nav-link[aria-expanded="true"] {
+  border-color: transparent;
+  color: var(--arkav-pine);
+  background: linear-gradient(125deg, var(--arkav-cream), var(--arkav-sand));
+  box-shadow: none;
+}
+.arkav-navbar .navbar-toggler { min-width: 42px; font-size: 1rem; }
+.arkav-nav-mobile-label { display: none; }
+.arkav-navbar .badge-notification { position: static; margin: 0; font-size: 0.6rem; }
+
+/* All Bootstrap button variants share an Arkavidia silhouette and interaction states.
+   Variant variables retain the meaning of destructive, positive and download actions. */
+.arkav-theme .btn {
+  --arkav-control-bg: var(--arkav-pine);
+  --arkav-control-ink: var(--arkav-cream);
+  --arkav-control-edge: var(--arkav-ochre);
+  --arkav-control-hover: var(--arkav-jade);
+  --arkav-control-hover-ink: var(--arkav-cream);
+  --bs-btn-color: var(--arkav-control-ink);
+  --bs-btn-bg: var(--arkav-control-bg);
+  --bs-btn-border-color: var(--arkav-control-edge);
+  --bs-btn-hover-color: var(--arkav-control-hover-ink);
+  --bs-btn-hover-bg: var(--arkav-control-hover);
+  --bs-btn-hover-border-color: var(--arkav-gold);
+  --bs-btn-active-color: var(--arkav-control-hover-ink);
+  --bs-btn-active-bg: var(--arkav-control-hover);
+  --bs-btn-active-border-color: var(--arkav-gold);
+  --bs-btn-disabled-color: var(--arkav-control-ink);
+  --bs-btn-disabled-bg: var(--arkav-control-bg);
+  --bs-btn-disabled-border-color: var(--arkav-control-edge);
+  --bs-btn-disabled-opacity: 0.5;
+  --bs-btn-border-radius: 1rem 0.3rem;
+  --bs-btn-focus-shadow-rgb: 245, 166, 35;
+  position: relative;
+  padding: 0.75rem 1.35rem;
+  border-width: 1px;
+  font-family: var(--arkav-display);
+  font-size: 0.86rem;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0;
+  box-shadow: inset 0 0 0 3px rgba(253, 213, 148, 0.17), 0 4px 0 rgba(15, 47, 46, 0.14);
+  transition: background-color 180ms, border-color 180ms, color 180ms, box-shadow 180ms, translate 180ms;
+}
+.arkav-theme .btn:not(:disabled):not(.disabled):hover {
+  translate: 0 -2px;
+  box-shadow: inset 0 0 0 3px rgba(253, 213, 148, 0.25), 0 7px 16px rgba(15, 47, 46, 0.16);
+}
+.arkav-theme .btn:not(:disabled):not(.disabled):active { translate: 0 1px; box-shadow: inset 0 0 0 3px rgba(253, 213, 148, 0.2); }
+.arkav-theme .btn-sm { padding: 0.4rem 0.65rem; font-size: 0.73rem; }
+.arkav-theme .btn-lg { padding: 0.9rem 1.7rem; font-size: 1rem; }
+.arkav-theme .btn-secondary, .arkav-theme .btn-success {
+  --arkav-control-bg: var(--arkav-jade);
+  --arkav-control-hover: var(--arkav-pine);
+}
+.arkav-theme .btn-info, .arkav-theme .btn-file {
+  --arkav-control-bg: var(--arkav-blue);
+  --arkav-control-hover: var(--arkav-indigo);
+}
+.arkav-theme .btn-warning, .arkav-theme .arkav-hero-primary {
+  --arkav-control-bg: var(--arkav-gold);
+  --arkav-control-ink: var(--arkav-pine);
+  --arkav-control-hover: var(--arkav-sand);
+  --arkav-control-hover-ink: var(--arkav-pine);
+  box-shadow: inset 0 0 0 3px rgba(255, 252, 233, 0.5), 0 4px 0 var(--arkav-ochre);
+}
+.arkav-theme .btn-danger {
+  --arkav-control-bg: var(--arkav-coral);
+  --arkav-control-ink: var(--arkav-pine);
+  --arkav-control-hover: var(--arkav-pine);
+  --arkav-control-hover-ink: var(--arkav-cream);
+}
+.arkav-theme .btn-light {
+  --arkav-control-bg: var(--arkav-cream);
+  --arkav-control-ink: var(--arkav-pine);
+  --arkav-control-hover: var(--arkav-sand);
+  --arkav-control-hover-ink: var(--arkav-pine);
+}
+.arkav-theme .btn:where([class*="btn-outline-"]) {
+  --arkav-control-bg: var(--arkav-panel);
+  --arkav-control-ink: var(--arkav-ink);
+  --arkav-control-hover: var(--arkav-jade);
+  --arkav-control-hover-ink: var(--arkav-cream);
+  box-shadow: inset 0 0 0 3px rgba(217, 142, 4, 0.1), 0 4px 0 rgba(15, 47, 46, 0.1);
+}
+.arkav-theme .btn-outline-danger {
+  --arkav-control-edge: var(--arkav-coral);
+  --arkav-control-hover: var(--arkav-coral);
+  --arkav-control-hover-ink: var(--arkav-pine);
+}
+.arkav-theme .btn-outline-info { --arkav-control-hover: var(--arkav-blue); }
+.arkav-theme .btn-outline-warning {
+  --arkav-control-hover: var(--arkav-gold);
+  --arkav-control-hover-ink: var(--arkav-pine);
+}
+.arkav-theme .btn-link, .arkav-theme .btn-link:hover {
+  --arkav-control-bg: transparent;
+  --arkav-control-ink: var(--bs-link-color);
+  --arkav-control-edge: transparent;
+  --arkav-control-hover: transparent;
+  --arkav-control-hover-ink: var(--bs-link-hover-color);
+  box-shadow: none !important;
+  translate: none !important;
+}
+.arkav-theme .btn-close {
+  border: 1px solid var(--arkav-line);
+  border-radius: 0.6rem 0.2rem;
+  padding: 0.65rem;
+  background-color: var(--arkav-sand);
+  opacity: 1;
+  filter: none;
+}
+.arkav-theme .btn-close:hover { background-color: var(--arkav-gold); }
+
+/* Tabs, pagination and dropdown actions use the same paper-and-gold controls. */
+.arkav-theme .nav-tabs, .arkav-theme .nav-pills { gap: 0.5rem; padding-bottom: 0.6rem; border-color: var(--arkav-line); }
+.arkav-theme .nav-tabs .nav-link, .arkav-theme .nav-pills .nav-link,
+.arkav-theme .page-link, .arkav-theme .page-select {
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--arkav-line);
+  border-radius: 0.8rem 0.25rem;
+  color: var(--arkav-ink);
+  background: var(--arkav-panel);
+  font-family: var(--arkav-display);
+  font-size: 0.8rem;
+  transition: color 180ms, background-color 180ms, border-color 180ms;
+}
+.arkav-theme .nav-tabs .nav-link:hover, .arkav-theme .nav-pills .nav-link:hover,
+.arkav-theme .page-link:hover { border-color: var(--arkav-ochre); color: var(--arkav-ochre); }
+.arkav-theme .nav-tabs .nav-link.active, .arkav-theme .nav-pills .nav-link.active,
+.arkav-theme .page-item.active .page-link {
+  border-color: var(--arkav-ochre);
+  color: var(--arkav-pine);
+  background: var(--arkav-sand);
+  box-shadow: inset 0 0 0 3px rgba(217, 142, 4, 0.2);
+}
+.arkav-theme .dropdown-menu {
+  --bs-dropdown-color: var(--arkav-ink);
+  --bs-dropdown-bg: var(--arkav-panel);
+  --bs-dropdown-link-color: var(--arkav-ink);
+  --bs-dropdown-link-hover-color: var(--arkav-ink);
+  --bs-dropdown-link-hover-bg: var(--arkav-soft-line);
+  --bs-dropdown-link-active-color: var(--arkav-pine);
+  --bs-dropdown-link-active-bg: var(--arkav-sand);
+  padding: 0.4rem;
+  border: 1px solid var(--arkav-ochre);
+  border-radius: 1rem 0.3rem;
+  box-shadow: var(--arkav-shadow);
+}
+.arkav-theme .dropdown-item { padding: 0.55rem 0.8rem; border-radius: 0.65rem 0.2rem; cursor: pointer; }
+
+/* Forms and their smaller actions are part of the same visual language. */
+.arkav-theme .form-control, .arkav-theme .form-select, .arkav-theme .input-group-text {
+  border: 1px solid var(--arkav-line);
+  border-radius: 0.8rem 0.3rem;
+  color: var(--arkav-ink);
+  background-color: var(--arkav-panel);
+}
+.arkav-theme .form-control, .arkav-theme .form-select { min-height: 46px; }
+.arkav-theme .form-control::placeholder { color: var(--arkav-muted); opacity: 0.85; }
+.arkav-theme .form-control:focus, .arkav-theme .form-select:focus {
+  border-color: var(--arkav-ochre);
+  color: var(--arkav-ink);
+  background-color: var(--arkav-panel);
+  box-shadow: 0 0 0 0.2rem rgba(245, 166, 35, 0.2);
+}
+.arkav-theme .form-check-input { border-color: var(--arkav-ochre); }
+.arkav-theme .form-check-input:checked { border-color: var(--arkav-jade); background-color: var(--arkav-jade); }
+.arkav-theme .form-check-input:focus { border-color: var(--arkav-gold); box-shadow: 0 0 0 0.2rem rgba(245, 166, 35, 0.2); }
+.arkav-theme input[type="file"]::file-selector-button {
+  border: 0;
+  border-right: 1px solid var(--arkav-ochre);
+  color: var(--arkav-cream);
+  background: var(--arkav-jade);
+  font-family: var(--arkav-display);
+}
+.arkav-theme input[type="file"]:hover::file-selector-button { color: var(--arkav-pine); background: var(--arkav-sand); }
+.arkav-theme .form-label, .arkav-theme label { font-weight: 700; }
+
+/* Shared heading, paper panels and challenge cards. */
+.arkav-theme .jumbotron {
+  padding: clamp(2rem, 4vw, 3rem) 0 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--arkav-line);
+  color: var(--arkav-ink);
+  background: linear-gradient(110deg, var(--arkav-panel), transparent);
+}
+.arkav-theme .jumbotron h1 { margin: 0; font-size: clamp(2rem, 4vw, 3.2rem); }
+.arkav-theme .jumbotron .container::before {
+  display: block;
+  width: 64px;
+  height: 3px;
+  margin-bottom: 1rem;
+  margin-inline: auto;
+  border-radius: 100%;
+  background: linear-gradient(90deg, var(--arkav-ochre), var(--arkav-sand));
+  content: "";
+}
+.arkav-theme .category-header { display: flex; align-items: center; gap: 1rem; }
+.arkav-theme .category-header::after {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, var(--arkav-ochre), transparent);
+  content: "";
+}
+.arkav-theme .category-header h3 { margin: 0; font-size: 1.5rem; }
+.arkav-theme .challenge-button {
+  position: relative;
+  min-height: 154px;
+  padding: 1.4rem;
+  overflow: hidden;
+  border: 1px solid var(--arkav-ochre);
+  border-radius: 1.5rem 0.35rem;
+  color: var(--arkav-ink);
+  background: var(--arkav-panel);
+  box-shadow: inset 0 0 0 5px var(--arkav-panel), inset 0 0 0 6px var(--arkav-line), var(--arkav-shadow);
+  text-align: left;
+  white-space: normal;
+}
+.arkav-theme .challenge-button::before {
+  position: absolute;
+  top: 0;
+  right: 1.3rem;
+  width: 22px;
+  height: 30px;
+  background: linear-gradient(var(--arkav-gold), var(--arkav-sand));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 77%, 0 100%);
+  content: "";
+}
+.arkav-theme .challenge-button:hover {
+  border-color: var(--arkav-ochre);
+  color: var(--arkav-ink);
+  background: var(--arkav-panel);
+}
+.arkav-theme .btn.challenge-button:hover {
+  box-shadow: inset 0 0 0 5px var(--arkav-panel), inset 0 0 0 6px var(--arkav-ochre), 0 12px 25px rgba(15, 47, 46, 0.18);
+}
+.arkav-theme .challenge-inner { margin: 0 !important; }
+.arkav-theme .challenge-inner p {
+  margin-bottom: 1rem;
+  padding-right: 1rem;
+  overflow-wrap: anywhere;
+  font-family: var(--arkav-display);
+  font-size: 1.12rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+.arkav-theme .challenge-inner > span {
+  display: inline-block;
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--arkav-line);
+  border-radius: 0.65rem 0.2rem;
+  color: var(--arkav-pine);
+  background: var(--arkav-sand);
+  font-family: Lato, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.arkav-theme .challenge-button.challenge-solved, .arkav-theme .challenge-button.challenge-solved:hover {
+  border-color: var(--arkav-gold);
+  color: var(--arkav-cream);
+  background: var(--arkav-jade);
+  box-shadow: inset 0 0 0 5px var(--arkav-jade), inset 0 0 0 6px var(--arkav-ochre), var(--arkav-shadow);
+}
+.arkav-theme .challenge-solved::after {
+  position: absolute;
+  top: 0.5rem;
+  right: 1.6rem;
+  color: var(--arkav-pine);
+  font-family: "Font Awesome 6 Free";
+  font-size: 0.65rem;
+  font-weight: 900;
+  content: "\f00c";
+}
+.arkav-theme .modal-content, .arkav-theme .card, .arkav-theme .list-group-item {
+  border: 1px solid var(--arkav-line);
+  border-radius: 1.3rem 0.4rem;
+  color: var(--arkav-ink);
+  background-color: var(--arkav-panel);
+  box-shadow: var(--arkav-shadow);
+}
+.arkav-theme .card-header, .arkav-theme .modal-header { border-color: var(--arkav-line); background: var(--arkav-soft-line); }
+.arkav-theme .modal-content { border-top: 4px solid var(--arkav-gold); }
+.arkav-theme .modal-body { max-height: calc(100svh - 5rem); overflow-y: auto; }
+.arkav-theme .modal-backdrop { background: var(--arkav-pine); }
+.arkav-theme .challenge-name { margin-top: 1.5rem; }
+.arkav-theme .challenge-value { color: var(--arkav-ochre); font-family: Lato, sans-serif; font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+.arkav-theme .challenge-hints details {
+  margin: 0.5rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--arkav-line);
+  border-radius: 0.8rem 0.25rem;
+  background: var(--arkav-soft-line);
+}
+.arkav-theme .challenge-hints summary { color: var(--arkav-ink); font-family: var(--arkav-display); cursor: pointer; }
+.arkav-theme .challenge-hints details[open] summary { margin-bottom: 0.75rem; color: var(--arkav-ochre); }
+.arkav-theme .badge.bg-info, .arkav-theme .badge.bg-secondary { color: var(--arkav-pine) !important; background: var(--arkav-sand) !important; }
+.arkav-theme .alert { border: 1px solid var(--arkav-line); border-radius: 1rem 0.3rem; }
+.arkav-theme .alert-success { color: var(--arkav-cream); background: var(--arkav-jade); }
+.arkav-theme .alert-info { color: var(--arkav-cream); background: var(--arkav-blue); }
+.arkav-theme .alert-warning { color: var(--arkav-pine); background: var(--arkav-sand); }
+.arkav-theme .alert-danger { color: var(--arkav-pine); background: var(--arkav-coral); }
+
+/* Archived.svg sits behind the requested pages. Fixed positioning avoids stretching
+   the artwork with long scoreboards; main intentionally has no stacking context. */
+.arkav-page-background { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+.arkav-page-background img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.arkav-archive-page { background: transparent; }
+.arkav-page-background::after { position: absolute; inset: 0; background: rgba(255, 252, 233, 0.12); content: ""; }
+[data-bs-theme="dark"] .arkav-page-background::after { background: rgba(15, 47, 46, 0.32); }
+.arkav-archive-page .jumbotron { background: var(--arkav-panel); }
+.arkav-archive-page main > .container {
+  margin-top: 1.5rem;
+  padding: clamp(1rem, 3vw, 2rem);
+  border: 1px solid var(--arkav-line);
+  border-radius: 1.5rem 0.4rem;
+  background: var(--arkav-panel);
+  box-shadow: var(--arkav-shadow);
+}
+.arkav-theme .table {
+  --bs-table-color: var(--arkav-ink);
+  --bs-table-bg: var(--arkav-panel);
+  --bs-table-border-color: var(--arkav-line);
+  --bs-table-striped-bg: var(--arkav-soft-line);
+  --bs-table-striped-color: var(--arkav-ink);
+  --bs-table-hover-color: var(--arkav-ink);
+  --bs-table-hover-bg: var(--arkav-soft-line);
+  overflow-wrap: normal;
+  vertical-align: middle;
+}
+.arkav-theme .table thead { --bs-table-color: var(--arkav-cream); --bs-table-bg: var(--arkav-pine); font-family: var(--arkav-display); }
+.arkav-theme .table th, .arkav-theme .table td { padding: 1rem; }
+.arkav-theme .table thead th {
+  border-bottom: 2px solid var(--arkav-ochre);
+  font-weight: 400;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.arkav-theme .table td { overflow-wrap: anywhere; }
+.arkav-theme #scoreboard tbody tr:first-child { --bs-table-bg: rgba(245, 166, 35, 0.15); }
+.arkav-theme #scoreboard tbody tr:nth-child(-n+3) th { color: var(--arkav-ochre); font-family: var(--arkav-display); }
+.arkav-auth main > .container > .row > .col-md-8 {
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border: 1px solid var(--arkav-line);
+  border-top: 4px solid var(--arkav-gold);
+  border-radius: 1.5rem 0.4rem;
+  background: var(--arkav-panel);
+  box-shadow: var(--arkav-shadow);
+}
+.arkav-theme .text-muted { color: var(--arkav-muted) !important; }
+.arkav-theme .footer {
+  position: relative;
+  bottom: auto;
+  z-index: auto;
+  height: auto;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--arkav-line);
+  color: var(--arkav-muted);
+  background: var(--arkav-panel);
+  font-size: 0.8rem;
+  line-height: 1.65;
+}
+
+/* A real viewport-sized opening scene. The art fills the scene with cover;
+   the separately exported original banner is always fully visible above it. */
+.arkav-homepage .arkav-navbar {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  left: clamp(0.6rem, 2vw, 2rem);
+  right: clamp(0.6rem, 2vw, 2rem);
+  border: 0;
+  border-radius: 1.3rem 0.4rem;
+}
+.arkav-theme.arkav-homepage main { min-height: 100svh; padding: 0; }
+.arkav-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2.5svh, 2rem);
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: max(122px, env(safe-area-inset-top)) 1rem max(5rem, 12svh);
+  overflow: hidden;
+  background: var(--arkav-blue);
+}
+.arkav-hero-art { position: absolute; inset: 0; z-index: -2; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 58%; }
+.arkav-hero::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(255, 252, 233, 0.04) 50%, rgba(15, 47, 46, 0.35));
+  pointer-events: none;
+  content: "";
+}
+.arkav-hero-banner { display: block; width: min(90vw, 1140px); height: auto; flex-shrink: 0; }
+.arkav-hero-actions { position: relative; width: min(100%, 650px); margin: 0 auto; text-align: center; }
+.arkav-eyebrow {
+  margin: 0 0 1.5rem;
+  color: var(--arkav-pine);
+  font-family: var(--arkav-display);
+  font-size: clamp(1.35rem, 3vw, 2.35rem);
+  font-weight: 400;
+  line-height: 1.3;
+  text-shadow: 0 1px 12px rgba(255, 252, 233, 0.65);
+}
+.arkav-hero-buttons { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+.arkav-hero-buttons .btn { min-width: 190px; padding: 1rem 1.6rem; font-size: 1rem; border-radius: 1.3rem 0.4rem; }
+.arkav-theme .arkav-hero-secondary {
+  --arkav-control-bg: var(--arkav-cream);
+  --arkav-control-ink: var(--arkav-pine);
+  --arkav-control-hover: var(--arkav-sand);
+  --arkav-control-hover-ink: var(--arkav-pine);
+}
+.arkav-page-content { padding-top: 3rem; padding-bottom: 2rem; }
+
+@media (min-width: 1200px) {
+  .arkav-navbar.navbar-expand-xl .navbar-toggler { display: none; }
+}
+@media (max-width: 1199.98px) {
+  .arkav-navbar .navbar-collapse { max-height: calc(100svh - 130px); overflow-y: auto; padding: 0.8rem 0 0.2rem; }
+  .arkav-navbar .navbar-nav { align-items: stretch; }
+  .arkav-navbar .navbar-nav .nav-link { width: 100%; justify-content: flex-start; padding: 0.75rem 1rem; font-size: 0.85rem; }
+  .arkav-navbar .arkav-nav-account { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(253, 213, 148, 0.3); }
+  .arkav-nav-mobile-label { display: inline; }
+  .arkav-navbar .dropdown-menu { position: static; }
+}
+@media (max-width: 575.98px) {
+  .arkav-navbar { padding-inline: 0.25rem; }
+  .arkav-navbar > .container-fluid { gap: 0.4rem; }
+  .arkav-navbar .navbar-brand { gap: 0.5rem; margin-right: 0.25rem; }
+  .arkav-navbar .arkav-wordmark { font-size: 0.85rem; }
+  .arkav-wordmark small { font-size: 0.44rem; letter-spacing: 0.19em; }
+  .arkav-hero { padding-top: 130px; padding-bottom: max(5rem, 12svh, env(safe-area-inset-bottom)); }
+  .arkav-hero-banner { width: 100%; }
+  .arkav-hero-buttons { gap: 0.85rem; }
+  .arkav-hero-buttons .btn { width: min(100%, 310px); min-width: 0; padding: 0.9rem 1.25rem; }
+  .arkav-archive-page main > .container { width: calc(100% - 1rem); }
+  .arkav-theme .table th, .arkav-theme .table td { padding: 0.7rem 0.5rem; }
+  .arkav-theme .modal-body { max-height: calc(100svh - 2rem); }
+  .arkav-theme .nav-tabs { flex-wrap: wrap; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .arkav-theme .btn, .arkav-navbar .nav-link { transition: none; }
+  .arkav-theme .btn:not(:disabled):not(.disabled):hover, .arkav-theme .btn:not(:disabled):not(.disabled):active { translate: none; }
+}

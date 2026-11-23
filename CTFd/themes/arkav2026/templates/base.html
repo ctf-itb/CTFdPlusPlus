@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ title or Configs.ctf_name }}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{{ url_for('views.themes_beta', theme='arkav2026', path='img/favicon.ico', v='1') }}" type="image/x-icon" sizes="16x16 32x32 48x48 64x64">
+  <link rel="icon" href="{{ url_for('views.themes_beta', theme='arkav2026', path='img/favicon-32.png', v='1') }}" type="image/png" sizes="32x32">
+
+  {{ meta | safe }}
+
+  {% block stylesheets %}
+    {{ Assets.css("assets/scss/main.scss") }}
+    {# Plain prebuilt CSS must bypass views.themes, which appends .min/.dev. #}
+    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='arkav2026', path='css/arkav2026.css', v='4') }}">
+  {% endblock %}
+
+  {{ Plugins.styles }}
+
+  {{ Assets.js("assets/js/color_mode_switcher.js", type=None) }}
+
+  <script type="text/javascript">
+      window.init = {
+          'urlRoot': "{{ request.script_root }}",
+          'csrfNonce': "{{ Session.nonce }}",
+          'userMode': "{{ Configs.user_mode }}",
+          'userId': {{ Session.id }},
+          'userName': {{ User.name | tojson }},
+          'userEmail': {{ User.email | tojson }},
+          'userVerified': {{ User.verified | tojson }},
+          'teamId': {{ Team.id | tojson }},
+          'teamName': {{ Team.name | tojson }},
+          'start': {{ Configs.start | tojson }},
+          'end': {{ Configs.end | tojson }},
+          'themeSettings': {{ Configs.theme_settings | tojson }},
+          'eventSounds': [
+            "/themes/core/static/sounds/notification.webm",
+            "/themes/core/static/sounds/notification.mp3",
+          ],
+      }
+  </script>
+
+  {{ Configs.theme_header }}
+</head>
+<body class="arkav-theme{% if request.endpoint and request.endpoint.startswith('auth.') %} arkav-auth{% endif %}{% if request.path == request.script_root + '/' %} arkav-homepage{% endif %}{% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %} arkav-archive-page{% endif %}">
+{% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %}
+<picture class="arkav-page-background" aria-hidden="true">
+  <source media="(max-width: 575.98px)" srcset="{{ url_for('views.themes', theme='arkav2026', path='img/archived-background-mobile.webp') }}">
+  <img src="{{ url_for('views.themes', theme='arkav2026', path='img/archived-background.webp') }}" alt="" width="1920" height="1080" decoding="async">
+</picture>
+{% endif %}
+<a class="arkav-skip-link" href="#main-content">{% trans %}Skip to content{% endtrans %}</a>
+{% include "components/navbar.html" %}
+
+<main role="main" id="main-content">
+  {% block content %}
+  {% endblock %}
+</main>
+
+{% include "components/snackbar.html" %}
+
+<footer class="footer">
+  <div class="container text-center">
+    <a href="https://ctfd.io" class="text-secondary">
+      <small class="text-muted">
+        Arkavidia 11.0 <span aria-hidden="true">&middot;</span> {% trans %}Powered by CTFd++{% endtrans %}
+      </small>
+    </a>
+  </div>
+</footer>
+
+{% include "components/notifications.html" %}
+
+{% block scripts %}
+  {{ Assets.js("assets/js/page.js") }}
+{% endblock %}
+
+{{ Plugins.scripts }}
+
+{{ Configs.theme_footer }}
+</body>
+</html>
