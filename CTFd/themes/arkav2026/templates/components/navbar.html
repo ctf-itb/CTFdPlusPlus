@@ -76,7 +76,7 @@
           {% if registration_visible() %}
             {% call navigation_item('auth.register') %}{% trans %}Register{% endtrans %}{% endcall %}
           {% endif %}
-          {% call navigation_item('auth.login', 'fa-arrow-right', true) %}{% trans %}Login{% endtrans %}{% endcall %}
+          {% call navigation_item('auth.login', 'fa-arrow-right') %}{% trans %}Login{% endtrans %}{% endcall %}
         {% endif %}
 
         <li class="nav-item dropdown">

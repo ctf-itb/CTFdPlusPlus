@@ -12,7 +12,7 @@
   {% block stylesheets %}
     {{ Assets.css("assets/scss/main.scss") }}
     {# Plain prebuilt CSS must bypass views.themes, which appends .min/.dev. #}
-    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='arkav2026', path='css/arkav2026.css', v='4') }}">
+    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='arkav2026', path='css/arkav2026.css', v='6') }}">
   {% endblock %}
 
   {{ Plugins.styles }}
@@ -42,7 +42,7 @@
 
   {{ Configs.theme_header }}
 </head>
-<body class="arkav-theme{% if request.endpoint and request.endpoint.startswith('auth.') %} arkav-auth{% endif %}{% if request.path == request.script_root + '/' %} arkav-homepage{% endif %}{% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %} arkav-archive-page{% endif %}">
+<body class="arkav-theme{% if request.endpoint and request.endpoint.startswith('auth.') %} arkav-auth{% endif %}{% if request.path == request.script_root + '/' %} arkav-homepage{% endif %}{% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %} arkav-archive-page{% endif %}{% if request.endpoint in ['users.listing', 'teams.listing'] %} arkav-directory-page{% endif %}">
 {% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %}
 <picture class="arkav-page-background" aria-hidden="true">
   <source media="(max-width: 575.98px)" srcset="{{ url_for('views.themes', theme='arkav2026', path='img/archived-background-mobile.webp') }}">
