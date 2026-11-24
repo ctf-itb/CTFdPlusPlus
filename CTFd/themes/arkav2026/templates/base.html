@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html>
+{% set arkav_wallpaper = request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] or request.endpoint in ['auth.login', 'auth.register'] %}
+<html data-bs-theme="dark">
 <head>
   <title>{{ title or Configs.ctf_name }}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
   <link rel="icon" href="{{ url_for('views.themes_beta', theme='arkav2026', path='img/favicon.ico', v='1') }}" type="image/x-icon" sizes="16x16 32x32 48x48 64x64">
   <link rel="icon" href="{{ url_for('views.themes_beta', theme='arkav2026', path='img/favicon-32.png', v='1') }}" type="image/png" sizes="32x32">
 
@@ -12,12 +14,10 @@
   {% block stylesheets %}
     {{ Assets.css("assets/scss/main.scss") }}
     {# Plain prebuilt CSS must bypass views.themes, which appends .min/.dev. #}
-    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='arkav2026', path='css/arkav2026.css', v='6') }}">
+    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='arkav2026', path='css/arkav2026.css', v='13') }}">
   {% endblock %}
 
   {{ Plugins.styles }}
-
-  {{ Assets.js("assets/js/color_mode_switcher.js", type=None) }}
 
   <script type="text/javascript">
       window.init = {
@@ -42,8 +42,8 @@
 
   {{ Configs.theme_header }}
 </head>
-<body class="arkav-theme{% if request.endpoint and request.endpoint.startswith('auth.') %} arkav-auth{% endif %}{% if request.path == request.script_root + '/' %} arkav-homepage{% endif %}{% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %} arkav-archive-page{% endif %}{% if request.endpoint in ['users.listing', 'teams.listing'] %} arkav-directory-page{% endif %}">
-{% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %}
+<body class="arkav-theme{% if request.endpoint and request.endpoint.startswith('auth.') %} arkav-auth{% endif %}{% if request.path == request.script_root + '/' %} arkav-homepage{% endif %}{% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %} arkav-archive-page{% endif %}{% if request.endpoint in ['users.listing', 'teams.listing'] %} arkav-directory-page{% endif %}{% if arkav_wallpaper %} arkav-wallpaper-page{% endif %}">
+{% if arkav_wallpaper %}
 <picture class="arkav-page-background" aria-hidden="true">
   <source media="(max-width: 575.98px)" srcset="{{ url_for('views.themes', theme='arkav2026', path='img/archived-background-mobile.webp') }}">
   <img src="{{ url_for('views.themes', theme='arkav2026', path='img/archived-background.webp') }}" alt="" width="1920" height="1080" decoding="async">
@@ -63,7 +63,7 @@
   <div class="container text-center">
     <a href="https://ctfd.io" class="text-secondary">
       <small class="text-muted">
-        Arkavidia 11.0 <span aria-hidden="true">&middot;</span> {% trans %}Powered by CTFd++{% endtrans %}
+        {% trans %}Powered by CTFd++{% endtrans %}
       </small>
     </a>
   </div>
