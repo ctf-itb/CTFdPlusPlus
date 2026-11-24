@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-{% set arkav_wallpaper = request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] or request.endpoint in ['auth.login', 'auth.register'] %}
+{% set arkav_panel_page = request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] or request.endpoint == 'views.settings' %}
+{% set arkav_wallpaper = arkav_panel_page or request.endpoint in ['auth.login', 'auth.register', 'views.notifications'] %}
 <html data-bs-theme="dark">
 <head>
   <title>{{ title or Configs.ctf_name }}</title>
@@ -14,7 +15,7 @@
   {% block stylesheets %}
     {{ Assets.css("assets/scss/main.scss") }}
     {# Plain prebuilt CSS must bypass views.themes, which appends .min/.dev. #}
-    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='arkav2026', path='css/arkav2026.css', v='13') }}">
+    <link rel="stylesheet" href="{{ url_for('views.themes_beta', theme='arkav2026', path='css/arkav2026.css', v='22') }}">
   {% endblock %}
 
   {{ Plugins.styles }}
@@ -42,7 +43,7 @@
 
   {{ Configs.theme_header }}
 </head>
-<body class="arkav-theme{% if request.endpoint and request.endpoint.startswith('auth.') %} arkav-auth{% endif %}{% if request.path == request.script_root + '/' %} arkav-homepage{% endif %}{% if request.blueprint in ['challenges', 'scoreboard', 'users', 'teams'] %} arkav-archive-page{% endif %}{% if request.endpoint in ['users.listing', 'teams.listing'] %} arkav-directory-page{% endif %}{% if arkav_wallpaper %} arkav-wallpaper-page{% endif %}">
+<body class="arkav-theme{% if request.endpoint and request.endpoint.startswith('auth.') %} arkav-auth{% endif %}{% if request.path == request.script_root + '/' %} arkav-homepage{% endif %}{% if arkav_panel_page %} arkav-archive-page{% endif %}{% if request.endpoint in ['users.listing', 'teams.listing'] %} arkav-directory-page{% endif %}{% if request.endpoint == 'views.notifications' %} arkav-notifications{% endif %}{% if arkav_wallpaper %} arkav-wallpaper-page{% endif %}">
 {% if arkav_wallpaper %}
 <picture class="arkav-page-background" aria-hidden="true">
   <source media="(max-width: 575.98px)" srcset="{{ url_for('views.themes', theme='arkav2026', path='img/archived-background-mobile.webp') }}">
